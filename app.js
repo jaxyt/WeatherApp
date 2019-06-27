@@ -14,13 +14,13 @@ function getWeather(cityId) {
         response.on('end', () => {
             const weatherInfo = JSON.parse(body);
             console.dir(weatherInfo);
-            console.log(`It is currently ${weatherInfo.main.temp/10} degrees celsius in ${weatherInfo.name}`)
+            console.log(`It is currently ${(weatherInfo.main.temp/10).toFixed(2)} degrees celsius in ${weatherInfo.name}`)
         });
     })
 }
 
-console.log(location)
-getWeather(4188377);
+
+getWeather(location[0]);
 
 
 const sampleWeather = { 
