@@ -4,19 +4,6 @@ const url = require('url');
 const apiKey = '0af18737722b3d867cbf25114c09f760';
 const location = process.argv.slice(2);
 
-function getWeather(locationArgs) {
-    if (cityId) {
-        
-    } else if (zipcode) {
-        if (zipcode && country) {
-            
-        } else {
-
-        }
-    } else if (cityName && country) {
-        
-    }
-}
 
 function getByZip(zipcode, country = 'us') {
     const request = https.get(`https://api.openweathermap.org/data/2.5/weather?zip=${zipcode},${country}&APPID=${apiKey}`, (response) => {
@@ -64,7 +51,23 @@ function getById(cityId) {
 }
 
 
-getById(location[0]);
+function getWeather(locationArgs) {
+    if (locationArgs.length === 1) {
+        if (locationArgs[0].length > 5) {
+            getById(locationArgs[0]);
+        } else if (locationArgs[0].length === 5) {
+            getByZip(locationArgs[0]);
+        }
+    } else if (locationArgs.length === 2) {
+        if (typeof locationArgs[0] === 'number') {
+            getByZip(locationArgs[0], locationArgs[1]);
+        } else if (typeof locationArgs[0] === 'string') {
+            getByCityAndCountry(locationArgs[0], locationArgs[1]);
+        }
+    }
+}
+
+getWeather(location);
 
 
 const sampleWeather = { 
