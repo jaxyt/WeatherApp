@@ -4,7 +4,51 @@ const url = require('url');
 const apiKey = '0af18737722b3d867cbf25114c09f760';
 const location = process.argv.slice(2);
 
-function getWeather(cityId) {
+function getWeather(locationArgs) {
+    if (cityId) {
+        
+    } else if (zipcode) {
+        if (zipcode && country) {
+            
+        } else {
+
+        }
+    } else if (cityName && country) {
+        
+    }
+}
+
+function getByZip(zipcode, country = 'us') {
+    const request = https.get(`https://api.openweathermap.org/data/2.5/weather?zip=${zipcode},${country}&APPID=${apiKey}`, (response) => {
+        let body = '';
+        response.on('data', (data) => {
+            body += data.toString();
+        });
+
+        response.on('end', () => {
+            const weatherInfo = JSON.parse(body);
+            console.dir(weatherInfo);
+            console.log(`It is currently ${(weatherInfo.main.temp/10).toFixed(2)} degrees celsius in ${weatherInfo.name}`)
+        });
+    })
+}
+
+function getByCityAndCountry(cityName, country = '') {
+    const request = https.get(`https://api.openweathermap.org/data/2.5/weather?id=${cityId}&APPID=${apiKey}`, (response) => {
+        let body = '';
+        response.on('data', (data) => {
+            body += data.toString();
+        });
+
+        response.on('end', () => {
+            const weatherInfo = JSON.parse(body);
+            console.dir(weatherInfo);
+            console.log(`It is currently ${(weatherInfo.main.temp/10).toFixed(2)} degrees celsius in ${weatherInfo.name}`)
+        });
+    })
+}
+
+function getById(cityId) {
     const request = https.get(`https://api.openweathermap.org/data/2.5/weather?id=${cityId}&APPID=${apiKey}`, (response) => {
         let body = '';
         response.on('data', (data) => {
@@ -20,7 +64,7 @@ function getWeather(cityId) {
 }
 
 
-getWeather(location[0]);
+getById(location[0]);
 
 
 const sampleWeather = { 
