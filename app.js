@@ -15,7 +15,7 @@ function weather(args) {
             });
             res.on('end', () => {
                 const weatherData = JSON.parse(body);
-                console.log(`it is currently ${(weatherData.main.temp / 10).toFixed(2)} degrees celsius in ${weatherData.name}`);
+                console.log(`it is currently ${(weatherData.main.temp * (9/5) - 459.67).toFixed(1)}F in ${weatherData.name}`);
             });
         }); 
     } catch (error) {
